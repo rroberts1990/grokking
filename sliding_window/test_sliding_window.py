@@ -33,3 +33,25 @@ def test_longest_substring_with_k_distinct_chars(string, k, expected):
     solver = SlidingWindow()
     actual = solver.longest_substring_with_k_distinct_chars(string, k)
     assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'fruits, expected',
+    [(['A', 'B', 'C', 'A', 'C'], 3),
+    (['A', 'B', 'C', 'B', 'B', 'C'], 5)]
+)
+def test_fruits_into_baskets(fruits, expected):
+    solver = SlidingWindow()
+    actual = solver.fruits_into_baskets(fruits)
+    assert actual == expected
+
+@pytest.mark.parametrize(
+    'string, expected',
+    [('aabccbb', 3),
+     ('abbbb', 2),
+     ('abccde', 3)]
+)
+def test_longest_distinct_substring(string, expected):
+    solver = SlidingWindow()
+    actual = solver.longest_distinct_substring(string)
+    assert actual == expected
