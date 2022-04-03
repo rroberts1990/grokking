@@ -70,15 +70,63 @@ class SlidingWindow:
 
         for window_end in range(len(string)):
             right_char = string[window_end]
+            if right_char in char_map:
+                window_start = max(window_start, char_map[right_char] + 1)
+            char_map[right_char] = window_end
+            max_len = max(max_len, window_end - window_start + 1)
+        return max_len
+
+    def longest_substring_with_replacement(self, string, k):
+        window_start, max_repeat_letter_count, max_len = 0, 0, 0
+        char_map = defaultdict(int)
+
+        for window_end in range(len(string)):
+            right_char = string[window_end]
             char_map[right_char] += 1
-            while len(char_map) > k:
-                left_char = string[window_start]
+            max_repeat_letter_count = max(max_repeat_letter_count, char_map[right_char])
+            if (window_end - window_start + 1 - max_repeat_letter_count) > k:
+                left_char = char_map[window_start]
                 char_map[left_char] -= 1
-                if char_map[left_char] == 0:
-                    del char_map[left_char]
                 window_start += 1
             max_len = max(max_len, window_end - window_start + 1)
         return max_len
 
+    def longest_substring_ones_with_replacement(self, array, k):
+        window_start, max_ones, max_len = 0, 0, 0
 
+        for window_end in range(len(array)):
+            right_val = array[window_end]
+            if right_val == 1:
+                max_ones += 1
+            if (window_end - window_start + 1 - max_ones) > k:
+                left_val = array[window_start]
+                if left_val == 1:
+                    max_ones -= 1
+                window_start += 1
+            max_len = max(max_len, window_end - window_start + 1)
+        return max_len
 
+    def permutations(self, string, pattern):
+        window_start, matched = 0, 0
+        char_map = defaultdict(int)
+
+        for char in pattern:
+            char_map[char] += 1
+
+        for window_end in range(len(string)):
+            right_char = string[window_end]
+            if right_char in char_map:
+                char_map[right_char] -= 1
+                if char_map[right_char] == 0:
+                    matched += 1
+            if len(char_map) == matched:
+                return True
+
+            if window_end >= len(pattern) - 1:
+                left_char = string[window_start]
+                window_start += 1
+                if left_char in char_map:
+                    if char_map[left_char] == 0:
+                        matched -= 1
+                    char_map[left_char] += 1
+        return False

@@ -55,3 +55,38 @@ def test_longest_distinct_substring(string, expected):
     solver = SlidingWindow()
     actual = solver.longest_distinct_substring(string)
     assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'string, k, expected',
+    [('aabccbb', 2, 5),
+     ('abbcb', 1, 4),
+     ('abccde', 1, 3)]
+)
+def test_longest_substring_with_replacement(string, k, expected):
+    solver = SlidingWindow()
+    actual = solver.longest_substring_with_replacement(string, k)
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'array, k, expected',
+    [([0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], 2, 6),
+     ([0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1], 3, 9)]
+)
+def test_longest_substring_ones_with_replacement(array, k, expected):
+    solver = SlidingWindow()
+    actual = solver.longest_substring_ones_with_replacement(array, k)
+    assert actual == expected
+
+@pytest.mark.parametrize(
+    'string, pattern, expected',
+    [('oidbcaf', 'abc', True),
+     ('odicf', 'dc', False),
+     ('bcdxabcdy', 'bcdyabcdx', True),
+     ('aaacb', 'abc', True)]
+)
+def test_permutations(string, pattern, expected):
+    solver = SlidingWindow()
+    actual = solver.permutations(string, pattern)
+    assert actual == expected
