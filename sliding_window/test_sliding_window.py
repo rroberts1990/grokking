@@ -90,3 +90,26 @@ def test_permutations(string, pattern, expected):
     solver = SlidingWindow()
     actual = solver.permutations(string, pattern)
     assert actual == expected
+
+@pytest.mark.parametrize(
+    'string, pattern, expected',
+    [('ppqp', 'pq', [1, 2]),
+     ('abbcabc', 'abc', [2, 3, 4])]
+)
+def test_string_anagrams(string, pattern, expected):
+    solver = SlidingWindow()
+    actual = solver.string_anagrams(string, pattern)
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'string, pattern, expected',
+    [('aabdec', 'abc', 'abdec'),
+     ('aabdec', 'abac', 'aabdec'),
+     ('abdbca', 'abc', 'bca'),
+     ('adcad', 'abc', '')]
+)
+def test_smallest_substring_containing_pattern(string, pattern, expected):
+    solver = SlidingWindow()
+    actual = solver.smallest_window_containing_pattern(string, pattern)
+    assert actual == expected

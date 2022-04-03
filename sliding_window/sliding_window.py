@@ -130,3 +130,64 @@ class SlidingWindow:
                         matched -= 1
                     char_map[left_char] += 1
         return False
+
+    def string_anagrams(self, string, pattern):
+        window_start, matched = 0, 0
+        char_map = defaultdict(int)
+        indices = []
+
+        for char in pattern:
+            char_map[char] += 1
+
+        for window_end in range(len(string)):
+            right_char = string[window_end]
+            if right_char in char_map:
+                char_map[right_char] -= 1
+                if char_map[right_char] == 0:
+                    matched += 1
+            if len(char_map) == matched:
+                indices.append(window_start)
+
+            if window_end >= len(pattern) - 1:
+                left_char = string[window_start]
+                window_start += 1
+                if left_char in char_map:
+                    if char_map[left_char] == 0:
+                        matched -= 1
+                    char_map[left_char] += 1
+        return indices
+
+    def smallest_window_containing_pattern(self, string, pattern):
+        window_start, matched, substr_start = 0, 0, 0
+        char_map = defaultdict(int)
+        min_length = len(string) + 1
+
+        for char in pattern:
+            char_map[char] += 1
+
+        for window_end in range(len(string)):
+            right_char = string[window_end]
+
+            if right_char in char_map:
+                char_map[right_char] -= 1
+
+                if char_map[right_char] >= 0:
+                    matched += 1
+
+            while matched == len(pattern):
+                if min_length > window_end - window_start + 1:
+                    min_length = window_end - window_start + 1
+                    substr_start = window_start
+
+                left_char = string[window_start]
+                window_start += 1
+                if left_char in char_map:
+                    if char_map[left_char] == 0:
+                        matched -= 1
+                    char_map[left_char] += 1
+
+        if min_length > len(string):
+            return ""
+
+        return string[substr_start:substr_start+min_length]
+
