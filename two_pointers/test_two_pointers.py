@@ -26,3 +26,11 @@ def test_remove_duplicates(input, expected):
     solver = TwoPointers()
     actual = solver.remove_duplicates(input)
     assert actual == expected
+
+@pytest.mark.parametrize('input, expected',
+                         [([-2, -1, 0, 2, 3], [0, 1, 4, 4, 9]),
+                          ([-3, -1, 0, 1, 2], [0, 1, 1, 4, 9])])
+def test_square_sorted_array(input, expected):
+    solver = TwoPointers()
+    actual = solver.square_sorted_array(input)
+    assert actual == expected

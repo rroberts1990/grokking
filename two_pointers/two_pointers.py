@@ -37,4 +37,19 @@ class TwoPointers:
         return next_non_dupe
 
 
-# [2, 3, 3, 3, 6, 9, 9], 4
+    def square_sorted_array(self, array):
+        n = len(array)
+        squares = [0 for x in range(n)]
+        largest_square_idx = n - 1
+        left, right = 0, n - 1
+        while left <= right:
+            left_square = array[left] * array[left]
+            right_square = array[right] * array[right]
+            if left_square > right_square:
+                squares[largest_square_idx] = left_square
+                left += 1
+            else:
+                squares[largest_square_idx] = right_square
+                right -= 1
+            largest_square_idx -= 1
+        return squares
