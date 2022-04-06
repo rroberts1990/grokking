@@ -113,3 +113,14 @@ def test_smallest_substring_containing_pattern(string, pattern, expected):
     solver = SlidingWindow()
     actual = solver.smallest_window_containing_pattern(string, pattern)
     assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'string, words, expected',
+    [('catfoxcat', ['cat', 'fox'], [0, 3]),
+     ('catcatfoxfox', ['cat', 'fox'], [3])]
+)
+def test_words_concatenation(string, words, expected):
+    solver = SlidingWindow()
+    actual = solver.words_concatenation(string, words)
+    assert actual == expected

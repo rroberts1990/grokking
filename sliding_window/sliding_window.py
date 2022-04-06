@@ -191,3 +191,35 @@ class SlidingWindow:
 
         return string[substr_start:substr_start+min_length]
 
+    def words_concatenation(self, string, words):
+
+        if len(words) == 0 or len(words[0]) == 0:
+            return []
+
+        indices = []
+        word_count = len(words)
+        word_length = len(words[0])
+        word_map = defaultdict(int)
+        window_start = 0
+
+        for word in words:
+            word_map[word] += 1
+        words_seen = defaultdict(int)
+        for window_end in range(len(string)):
+            if window_end - window_start + 1 >= word_length:
+                word = string[window_start:window_end+1]
+                if word not in words:
+                    indices = []
+                    words_seen = defaultdict(int)
+                    continue
+                if word in words:
+                    print(f'word: {word} is in word list')
+                    words_seen[word] += 1
+                    window_start += word_length
+                    print(f'words_seen: {words_seen}')
+
+            if len(words_seen) == word_count:
+                indices.append(window_start)
+
+        return indices
+
