@@ -11,131 +11,48 @@ class TreeNode:
     def __eq__(self, other):
         return self.value == other.value
 
+    def __repr__(self):
+        return f'Node({self.value})'
 
-class TreeBreadthFirstSearch:
+    def is_leaf(self):
+        return self.left is None and self.right is None
 
-    def level_order_traversal(self, root):
-        result = []
+
+class TreeDepthFirstSearch:
+
+    def path_sum(self, root, s):
         if root is None:
-            return result
-
-        queue = deque()
-        queue.append(root)
-
-        while queue:
-            level_size = len(queue)
-            current_level = []
-            for _ in range(level_size):
-                current_node = queue.popleft()
-                current_level.append(current_node.value)
-                if current_node.left:
-                    queue.append(current_node.left)
-                if current_node.right:
-                    queue.append(current_node.right)
-            result.append(current_level)
-        return result
-
-    def reverse_level_order_traversal(self, root):
-        result = deque()
-        if root is None:
-            return result
-
-        queue = deque()
-        queue.append(root)
-
-        while queue:
-            level_size = len(queue)
-            current_level = []
-            for _ in range(level_size):
-                current_node = queue.popleft()
-                current_level.append(current_node.value)
-                if current_node.left:
-                    queue.append(current_node.left)
-                if current_node.right:
-                    queue.append(current_node.right)
-            result.appendleft(current_level)
-        return list(result)
-
-    def zig_zag_traversal(self, root):
-        result = []
-        if root is None:
-            return result
-
-        queue = deque()
-        queue.append(root)
-        left_to_right = True
-        while queue:
-            level_size = len(queue)
-            current_level = deque()
-            for _ in range(level_size):
-                current_node = queue.popleft()
-                if left_to_right:
-                    current_level.append(current_node.value)
-                else:
-                    current_level.appendleft(current_node.value)
-                if current_node.left:
-                    queue.append(current_node.left)
-                if current_node.right:
-                    queue.append(current_node.right)
-            result.append(list(current_level))
-            left_to_right = not left_to_right
-        return result
-
-    def level_averages(self, root):
-        result = []
-        if root is None:
-            return result
-        queue = deque()
-        queue.append(root)
-
-        while queue:
-            level_size = len(queue)
-            level_sum = 0
-            for _ in range(level_size):
-                current_node = queue.popleft()
-                level_sum += current_node.value
-                if current_node.left:
-                    queue.append(current_node.left)
-                if current_node.right:
-                    queue.append(current_node.right)
-
-            average = level_sum/level_size
-            result.append(average)
-        return result
-
-    def minimum_depth(self, root):
-
-        queue = deque()
-        queue.append(root)
-        min_depth = 0
-        while queue:
-            level_size = len(queue)
-            min_depth += 1
-            for _ in range(level_size):
-                current_node = queue.popleft()
-                if not current_node.left and not current_node.right:
-                    return min_depth
-
-                if current_node.left:
-                    queue.append(current_node.left)
-                if current_node.right:
-                    queue.append(current_node.right)
-
-    def level_order_successor(self, root, key):
-        queue = deque()
-        queue.append(root)
-
-        while queue:
-            current_node = queue.popleft()
-            if current_node.left:
-                queue.append(current_node.left)
-            if current_node.right:
-                queue.append(current_node.right)
-
-            if current_node.value == key:
-                break
-        return queue[0]
+            return False
+        print(root)
+        if root.is_leaf() and root.value == s:
+            return True
+        return self.path_sum(root.left, s - root.value) or \
+            self.path_sum(root.right, s - root.value)
 
 
-    def connect_level_order_siblings(self, root):
-        pass
+    def find_paths(self, root, path_sum):
+        all_paths = []
+        self.find_paths_recursive(root, path_sum, [], all_paths)
+        return all_paths
+
+    def find_paths_recursive(self, current_node, current_sum, current_path, all_paths):
+        if current_node is None:
+            return
+
+        current_path.append(current_node.val)
+
+        if current_node.is_leaf() and current_node.val == current_sum:
+            all_paths.append(current_path)
+
+        else:
+            self.find_paths_recursive(current_node.left, current_sum - current_node.value, current_path, all_paths)
+            self.find_paths_recursive(current_node.right, current_sum - current_node.value, current_path, all_paths)
+
+        del current_path[-1]
+
+    def sum_of_path_numbers(self, root):
+
+
+
+
+
