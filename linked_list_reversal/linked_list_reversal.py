@@ -68,7 +68,6 @@ class ReverseLinkedList:
         while True:
             last_node_of_prev_part = previous
             last_node_of_sublist = current
-            next_node = None
             i = 0
             while current is not None and i < k:
                 next_node = current.next
