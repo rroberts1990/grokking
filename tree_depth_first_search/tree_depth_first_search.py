@@ -51,6 +51,10 @@ class TreeDepthFirstSearch:
         del current_path[-1]
 
     def sum_of_path_numbers(self, root):
+        current_node = root
+        if current_node is None:
+            return 0
+        
 
 
 
