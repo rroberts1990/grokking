@@ -5,6 +5,7 @@ class TreeNode:
         self.value = value
         self.left, self.right = None, None
 
+
     def print_tree(self):
         return f"[{self.value}->[{self.left}, {self.right}]"
 
@@ -12,7 +13,7 @@ class TreeNode:
         return self.value == other.value
 
     def __repr__(self):
-        return f'Node({self.value})'
+        return f'Node({self.value}, left: {self.left}, right: {self.right})'
 
     def is_leaf(self):
         return self.left is None and self.right is None
@@ -54,7 +55,7 @@ class TreeDepthFirstSearch:
         current_node = root
         if current_node is None:
             return 0
-        
+
 
 
 
